@@ -2,7 +2,7 @@
   "Global defs": {
     "int-dtype": "int8",
     "float-dtype": "float32",
-    "parameter_save_dtype": "msgpack",
+    "parameter_save_dtype": "safetensors",
     "hf_private_repo": false
   },
 
@@ -15,7 +15,7 @@
 
   "TFI Hamiltonian constants": {
     "L": 10,
-    "g": 0.8
+    "g": 0.3
   },
 
   "MC Sampler config": {

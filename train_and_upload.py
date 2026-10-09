@@ -66,6 +66,6 @@ sampler = jVMC.sampler.MCSampler(psi, (L,), random.PRNGKey(mc_seed), updatePropo
 train(hamiltonian, sampler, psi, L, g, n_steps)
 
 # --- upload config, parameters and visualizations to corresponding branch ---
-hf_upload_flax_parameter(psi.parameters, repo_id=repo_id, revision=revision, dtype=parameter_save_dtype)
+hf_upload_flax_parameter(psi.parameters, repo_id=repo_id, revision=revision, dtype=parameter_save_dtype) # type: ignore
 upload_file(path_or_fileobj="config.json", path_in_repo="config.json", repo_id=repo_id, revision=revision)
 upload_folder(folder_path="figures", path_in_repo="figures", repo_id=repo_id, revision=revision, allow_patterns="*.pdf")

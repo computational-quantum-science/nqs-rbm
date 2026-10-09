@@ -6,7 +6,7 @@ from flax.traverse_util import flatten_dict, unflatten_dict
 from safetensors.flax import save_file, load_file
 
 
-def hf_upload_flax_parameter(parameter: dict, repo_id: str, revision: str, metadata: dict[str, str] = None, dtype: str = "safetensors"):
+def hf_upload_flax_parameter(parameter: dict, repo_id: str, revision: str, metadata=None, dtype: str = "safetensors"):
     '''''
     dtype options: "msgpack", "hdf5" / "h5", "safetensors"
     '''''
@@ -19,14 +19,14 @@ def hf_upload_flax_parameter(parameter: dict, repo_id: str, revision: str, metad
         elif dtype in ["hdf5", "h5"]:
             save_dict_to_hdf5(os_path, parameter, metadata)
         elif dtype == "safetensors":
-            save_file(tensors=flatten_dict(parameter, sep="."), filename=os_path, metadata=metadata)
+            save_file(tensors=flatten_dict(parameter, sep="."), filename=os_path, metadata=metadata) # type: ignore
         else:
             print("Error: Data type not available! (Choose msgpack or hdf5)")
             return 0
         upload_file(path_or_fileobj=os_path, path_in_repo=f"parameter.{dtype}", repo_id=repo_id, revision=revision)
 
 
-def hf_download_flax_parameter(repo_id: str, revision: str = "main") -> dict:
+def hf_download_flax_parameter(repo_id: str, revision: str = "main"):
     '''''
     Example:
     parameter = hf_download_flax_parameter("NiklasBli/nqs-rbm", "rbm_10_6_0.7")
@@ -47,7 +47,7 @@ def hf_download_flax_parameter(repo_id: str, revision: str = "main") -> dict:
         print("Error: no parameter.{dtype} file found!")
         return 0
 
-def save_dict_to_hdf5(path: str, data: dict, metadata: dict = None):
+def save_dict_to_hdf5(path: str, data: dict, metadata=None):
     with h5py.File(path, "w") as file:
         _save_dict_to_hdf5(file, "", data)
         if metadata is not None:
@@ -63,7 +63,7 @@ def _save_dict_to_hdf5(h5_file, path, dic):
 
 def load_dict_from_hdf5(path: str) -> dict:
     with h5py.File(path, "r") as file:
-        out = _save_dict_to_hdf5(file, "")
+        out = _save_dict_to_hdf5(file, "") # type: ignore
     return out
 
 def _load_dict_from_hdf5(h5_file, path):

@@ -20,9 +20,9 @@ def train(hamiltonian, sampler, psi, L, g, n_steps):
     print(f"exact ground state energy: {exact_energy}")
 
     # Set up TDVP
-    tdvpEquation = jVMC.util.tdvp.TDVP(sampler, rhsPrefactor=1., diagonalShift=10, makeReal='real')
+    tdvpEquation = jVMC.util.tdvp.TDVP(sampler, rhsPrefactor=1., diagonalShift=10, makeReal='real') # type: ignore
 
-    stepper = jVMC.util.stepper.Euler(timeStep=1e-2)  # ODE integrator
+    stepper = jVMC.util.stepper.Euler(timeStep=1e-2)  # type: ignore # ODE integrator
 
     res = []
     for n in range(n_steps):
